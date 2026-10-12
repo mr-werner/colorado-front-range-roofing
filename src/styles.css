@@ -140,9 +140,9 @@
 
 .hero-content {
 
-  padding-top: 25px;
+  padding-top: 55px;
 
-  padding-bottom: 55px;
+  padding-bottom: 95px;
 
 }
 /* Interactive service-area map and Google reviews */
@@ -183,3 +183,45 @@
 .hero-rating>svg{color:#cbb8ff}
 @media(max-width:800px){.topline-inner{gap:10px}.topline-rating{order:3;width:100%;padding:4px 0}.topline-social{order:2}.topline-contact{order:1}}
 @media(max-width:540px){.hero-rating{gap:10px}.hero-rating-stars{font-size:18px}.topline-rating{white-space:normal}}
+
+/* Blueprint WebStudio concept preview — fixed, collapsible widget */
+.concept-widget{position:fixed;bottom:18px;right:18px;width:min(390px,calc(100vw - 32px));z-index:100;background:#251e49;color:#fff;border:1px solid #8d7ac1;box-shadow:0 20px 65px #17132d65;font-family:'DM Sans',sans-serif}
+.concept-widget-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;color:#d5c9f5;font-size:10px;font-weight:800;letter-spacing:.15em}
+.concept-widget-head button{background:none;border:0;color:#e1c9ff;display:grid;place-items:center;padding:4px}
+.concept-widget-body{padding:8px 20px 20px}
+.concept-widget-body h2{font-size:25px;letter-spacing:-.04em;font-weight:600;line-height:1.25;margin:5px 0 23px;color:white}
+.concept-widget-label{font-size:11px;font-weight:800;letter-spacing:.16em;color:#c9b3ff}
+.concept-widget-body p{color:#b8aed0;font-size:12px;margin:9px 0 14px}
+.concept-widget-timer{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px;color:#c7bed8;font-size:12px}
+.concept-widget-timer span{white-space:nowrap}
+.concept-widget-timer strong{font-size:24px;color:#fff;font-weight:600;letter-spacing:-.04em}
+.concept-widget-cta{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:0;background:#c7b0f5;color:#211a43;padding:16px;font-size:14px;font-weight:800;transition:background .2s}
+.concept-widget-cta:hover{background:#e0d1ff}
+.concept-widget-links{display:flex;justify-content:center;gap:13px;margin-top:18px;font-size:12px;color:#d6cce8}
+.concept-widget-links a+a:before{content:'·';margin-right:13px;color:#8e81b4}
+.concept-widget-links a:hover{color:#fff}
+.concept-widget-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid #ffffff2c;padding:13px 20px;font-size:10px;color:#b6aaca}
+.concept-widget-footer a:hover{color:#fff}
+.concept-widget.is-collapsed .concept-widget-footer{display:none}
+.interest-backdrop{position:fixed;inset:0;z-index:200;background:#151024bf;display:flex;justify-content:center;align-items:center;padding:24px}
+.interest-modal{position:relative;width:min(720px,100%);max-height:min(90vh,900px);overflow-y:auto;background:#f8f7fc;color:#251e49;padding:clamp(26px,5vw,60px);box-shadow:0 25px 85px #120c2c75;outline:none}
+.interest-close{position:absolute;right:17px;top:17px;background:transparent;border:0;color:#6046a8;padding:6px}
+.interest-kicker{display:block;color:#6046a8;font-size:11px;font-weight:800;letter-spacing:.18em;padding-right:32px}
+.interest-modal h2{font-size:clamp(32px,5vw,55px);line-height:1.1;margin:30px 0 18px;letter-spacing:-.055em}
+.interest-intro{font-size:14px;line-height:1.75;color:#6e7281;margin-bottom:26px}
+.interest-form{display:grid;gap:20px}
+.interest-form label{display:grid;gap:8px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:#4b416c}
+.interest-form label span{color:#a43b62}
+.interest-form label small{color:#8b8895;font-size:10px}
+.interest-form input,.interest-form select,.interest-form textarea{width:100%;min-height:40px;background:transparent;border:0;border-bottom:1px solid #c7bfd8;border-radius:0;padding:9px 3px;color:#251e49;font:400 15px 'DM Sans',sans-serif;letter-spacing:normal;text-transform:none;outline-offset:3px}
+.interest-form textarea{resize:vertical;min-height:90px}
+.interest-form input:focus,.interest-form select:focus,.interest-form textarea:focus{border-bottom-color:#6046a8}
+.interest-honeypot{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.interest-submit{width:100%;border:0;background:#6046a8;color:#fff;font-weight:800;padding:17px;cursor:pointer}
+.interest-submit:hover:not(:disabled){background:#483286}
+.interest-submit:disabled{opacity:.65;cursor:wait}
+.interest-error{color:#a42343;font-size:13px;margin:0}
+.interest-privacy{font-size:11px;color:#777084;line-height:1.6;margin:0}
+.interest-success svg{color:#6046a8}
+.interest-success p{line-height:1.7;color:#686175;margin-bottom:25px}
+@media(max-width:540px){.concept-widget{right:10px;bottom:10px;width:min(355px,calc(100vw - 20px))}.interest-backdrop{padding:10px}.interest-modal{max-height:95vh;padding:35px 22px}.concept-widget-body h2{font-size:23px}}

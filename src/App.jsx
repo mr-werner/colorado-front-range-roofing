@@ -45,6 +45,8 @@ import {
   X,
 
   Youtube,
+  Minus,
+  Plus,
 
 } from "lucide-react";
 
@@ -58,13 +60,17 @@ import {
 
 const COMPANY = "Colorado Front Range Roofing";
 
-const PHONE = "7195422330";
+const PHONE = "+17195422330";
 
 const EMAIL = "info@coloradofrroofing.com";
+// Public contact details — edit here, no environment variables required.
+const STUDIO_PHONE = "+17205156647"; // Add your Blueprint WebStudio phone number.
+const STUDIO_EMAIL = "hello@blueprintwebstudio.com";
+const STUDIO_WEBSITE = "https://blueprintwebstudio.com";
 
 const END_DATE =
 
-  import.meta.env.VITE_CONCEPT_END_DATE || "2026-10-19T23:59:59-06:00";
+  import.meta.env.VITE_CONCEPT_END_DATE || "2026-11-14T23:59:59-06:00";
 
 
 
@@ -264,116 +270,151 @@ function getRemaining() {
 
 
 
-function Countdown() {
-
-  const [remaining, setRemaining] = useState(getRemaining);
-
-  const [hidden, setHidden] = useState(false);
-
-
+function ConceptInterestModal({ onClose }) {
+  const [form, setForm] = useState({ name: "", email: "", phone: "", budget: "", message: "", website: "" });
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
+  const modalRef = React.useRef(null);
 
   useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const previousFocus = document.activeElement;
+    modalRef.current?.focus();
+    const handleEscape = (event) => { if (event.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handleEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleEscape);
+      previousFocus?.focus?.();
+    };
+  }, [onClose]);
 
-    const interval = setInterval(() => setRemaining(getRemaining()), 1000);
+  function update(field, value) { setForm((prev) => ({ ...prev, [field]: value })); }
 
-    return () => clearInterval(interval);
-
-  }, []);
-
-
-
-  if (hidden) {
-
-    return (
-
-      <button className="restore" onClick={() => setHidden(false)}>
-
-        Concept preview
-
-      </button>
-
-    );
-
+  async function submit(event) {
+    event.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setError("");
+    try {
+      const response = await fetch("https://blueprintwebstudio.com/api/demo-interest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prospect: COMPANY,
+          source: "cfrr.blueprintwebstudio.com",
+          page: window.location.href,
+          action: "Partner Program Interest",
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          budget: form.budget,
+          message: form.message.trim(),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.success) throw new Error(result.message || "Unable to send your message.");
+      setStatus("sent");
+    } catch (err) {
+      setStatus("error");
+      setError(err.message || "Please try again.");
+    }
   }
 
-
-
   return (
-
-    <aside className="concept" aria-label="Concept website notice">
-
-      <div className="concept-inner">
-
-        <div className="concept-copy">
-
-          <span className="eyebrow">BLUEPRINT WEBSTUDIO · INDEPENDENT CONCEPT</span>
-
-          <strong>This is a website redesign preview, not the company's official website.</strong>
-
-          <span>
-
-            Created for review. Interested in this design?{" "}
-
-            <a href="mailto:hello@blueprintwebstudio.com?subject=Colorado%20Front%20Range%20Roofing%20Concept">
-
-              Contact Blueprint WebStudio <ArrowUpRight size={13} />
-
-            </a>
-
-          </span>
-
-        </div>
-
-
-
-        <div className="timer" aria-label="Concept review time remaining">
-
-          {remaining.expired ? (
-
-            <strong>Review window ended</strong>
-
-          ) : (
-
-            ["days", "hours", "minutes", "seconds"].map((unit) => (
-
-              <div key={unit}>
-
-                <strong>{String(remaining[unit]).padStart(2, "0")}</strong>
-
-                <small>{unit}</small>
-
-              </div>
-
-            ))
-
-          )}
-
-        </div>
-
-
-
-        <button
-
-          className="close"
-
-          onClick={() => setHidden(true)}
-
-          aria-label="Dismiss concept banner"
-
-        >
-
-          <X size={18} />
-
-        </button>
-
-      </div>
-
-    </aside>
-
+    <div className="interest-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <section className="interest-modal" role="dialog" aria-modal="true" aria-labelledby="interest-title" ref={modalRef} tabIndex={-1}>
+        <button type="button" className="interest-close" onClick={onClose} aria-label="Close interest form"><X size={24} /></button>
+        <span className="interest-kicker">BLUEPRINT WEBSTUDIO PARTNER PROGRAM</span>
+        {status === "sent" ? (
+          <div className="interest-success">
+            <CheckCircle2 size={44} />
+            <h2 id="interest-title">Thank you for your interest.</h2>
+            <p>Your message has been sent to Blueprint WebStudio. We'll follow up using the contact information you provided.</p>
+            <button type="button" className="interest-submit" onClick={onClose}>Close</button>
+          </div>
+        ) : (
+          <>
+            <h2 id="interest-title">Interested in this redesign?</h2>
+            <p className="interest-intro">Send a quick note and Blueprint WebStudio will follow up about launching, customizing, or taking over the site.</p>
+            <form onSubmit={submit} className="interest-form">
+              <label>Name <span>*</span><input value={form.name} onChange={(e) => update("name", e.target.value)} required maxLength={120} autoComplete="name" /></label>
+              <label>Email <span>*</span><input type="email" value={form.email} onChange={(e) => update("email", e.target.value)} required maxLength={254} autoComplete="email" /></label>
+              <label>Phone<input type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} maxLength={40} autoComplete="tel" /></label>
+              <label>Budget <span>*</span>
+                <select value={form.budget} onChange={(e) => update("budget", e.target.value)} required>
+                  <option value="">Select a range...</option>
+                  <option value="Under $1,000">Under $1,000</option>
+                  <option value="$1,000–$2,500">$1,000–$2,500</option>
+                  <option value="$2,500–$5,000">$2,500–$5,000</option>
+                  <option value="$5,000–$10,000">$5,000–$10,000</option>
+                  <option value="$10,000+">$10,000+</option>
+                  <option value="Not sure yet">Not sure yet</option>
+                </select>
+              </label>
+              <label>Message <small>(optional)</small><textarea value={form.message} onChange={(e) => update("message", e.target.value)} maxLength={3000} rows={4} placeholder="Questions, ideas, or anything you'd like us to know..." /></label>
+              <div className="interest-honeypot" aria-hidden="true"><label>Website<input type="text" tabIndex={-1} autoComplete="off" value={form.website} onChange={(e) => update("website", e.target.value)} /></label></div>
+              {error && <p className="interest-error" role="alert">{error}</p>}
+              <button type="submit" className="interest-submit" disabled={status === "sending"}>{status === "sending" ? "Sending..." : "Send My Interest"}</button>
+              <p className="interest-privacy">Your inquiry goes directly to Blueprint WebStudio, not Colorado Front Range Roofing.</p>
+            </form>
+          </>
+        )}
+      </section>
+    </div>
   );
-
 }
 
+function Countdown() {
+  const [remaining, setRemaining] = useState(getRemaining);
+  const [collapsed, setCollapsed] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const closeForm = React.useCallback(() => setShowForm(false), []);
+
+  useEffect(() => {
+    const interval = setInterval(() => setRemaining(getRemaining()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <>
+      <aside className={`concept-widget${collapsed ? " is-collapsed" : ""}`} aria-label="Independent website concept preview">
+        <div className="concept-widget-head">
+          <span>CONCEPT REVIEW · NOT FOR OFFICIAL USE</span>
+          <button type="button" onClick={() => setCollapsed((value) => !value)} aria-label={collapsed ? "Expand concept preview" : "Collapse concept preview"} aria-expanded={!collapsed}>
+            {collapsed ? <Plus size={20} /> : <Minus size={20} />}
+          </button>
+        </div>
+        {!collapsed && (
+          <div className="concept-widget-body">
+            <h2>Private Client Preview</h2>
+            <span className="concept-widget-label">PARTNER PROGRAM ELIGIBILITY</span>
+            <p>Reserved for review</p>
+            <div className="concept-widget-timer" aria-label="Time remaining for concept review">
+              {remaining.expired ? <strong>Review window ended</strong> : (
+                [[remaining.days, "Days"], [remaining.hours, "Hours"], [remaining.minutes, "Minutes"]].map(([value, unit]) => (
+                  <span key={unit}><strong>{String(value).padStart(2, "0")}</strong> {unit}</span>
+                ))
+              )}
+            </div>
+            <button type="button" className="concept-widget-cta" onClick={() => setShowForm(true)}>I'm Interested <ArrowUpRight size={18} /></button>
+            <div className="concept-widget-links">
+              {STUDIO_PHONE && <a href={`tel:${STUDIO_PHONE.replace(/[^+\d]/g, "")}`}>Call</a>}
+              <a href={`mailto:${STUDIO_EMAIL}`}>Email</a>
+              <a href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer">Website</a>
+            </div>
+          </div>
+        )}
+        <div className="concept-widget-footer">
+          <a href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer">© Blueprint WebStudio</a>
+          <span>Independent concept</span>
+        </div>
+      </aside>
+      {showForm && <ConceptInterestModal onClose={closeForm} />}
+    </>
+  );
+}
 
 
 // -----------------------------------------------------------------------------
