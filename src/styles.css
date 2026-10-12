@@ -1636,3 +1636,37 @@ footer {
   padding-top: 25px;
   padding-bottom: 55px;
 }
+
+/* Compact header with a clearly visible logo */
+.header .nav {
+  height: 90px;
+  min-height: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.header .brand-logo {
+  height: 76px;
+  width: auto;
+  max-width: 290px;
+  object-fit: contain;
+}
+
+/* Mobile */
+@media (max-width: 800px) {
+  .header .nav {
+    height: 72px;
+    min-height: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .header .brand-logo {
+    height: 58px;
+    max-width: 220px;
+  }
+
+  .header .links {
+    top: 100%;
+  }
+}
