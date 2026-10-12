@@ -170,3 +170,16 @@
 .reviews-attribution{margin-top:20px}
 @media(max-width:800px){.reviews-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.area-map{height:350px}}
 @media(max-width:540px){.reviews-grid{grid-template-columns:1fr}.reviews-summary{align-items:flex-start;flex-direction:column}.area-map{height:320px}}
+
+/* Google rating highlights: actual data only, no hardcoded scores */
+.topline-rating{display:inline-flex;align-items:center;justify-content:center;gap:5px;white-space:nowrap;font-size:11px;color:#40365f}
+.topline-rating strong{font-weight:800;color:#251e49}
+.rating-stars,.hero-rating-stars{color:#e7a12e;letter-spacing:1px;font-size:14px}
+.hero-rating{display:inline-flex;align-items:center;gap:16px;flex-wrap:wrap;padding:17px 20px;margin-top:26px;background:rgba(27,20,61,.72);border:1px solid rgba(255,255,255,.3);color:#fff;backdrop-filter:blur(8px);max-width:100%}
+.hero-rating-stars{font-size:23px;letter-spacing:2px}
+.hero-rating>span:nth-child(2){display:grid;gap:4px;font-size:13px}
+.hero-rating strong{font-size:18px}
+.hero-rating small{font-size:11px;color:#ddd4f4}
+.hero-rating>svg{color:#cbb8ff}
+@media(max-width:800px){.topline-inner{gap:10px}.topline-rating{order:3;width:100%;padding:4px 0}.topline-social{order:2}.topline-contact{order:1}}
+@media(max-width:540px){.hero-rating{gap:10px}.hero-rating-stars{font-size:18px}.topline-rating{white-space:normal}}

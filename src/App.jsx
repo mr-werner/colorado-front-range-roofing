@@ -382,7 +382,7 @@ function Countdown() {
 
 // -----------------------------------------------------------------------------
 
-function SiteHeader() {
+function SiteHeader({ reviewData }) {
 
   const [menu, setMenu] = useState(false);
 
@@ -407,6 +407,17 @@ function SiteHeader() {
           </div>
 
 
+
+          {typeof reviewData?.rating === "number" && (
+            <a className="topline-rating" href={reviewData.googleMapsUri || "#reviews"}
+               target={reviewData.googleMapsUri ? "_blank" : undefined}
+               rel={reviewData.googleMapsUri ? "noopener noreferrer" : undefined}>
+              <span className="rating-stars" aria-hidden="true">★★★★★</span>
+              <strong>{reviewData.rating.toFixed(1)}</strong> on Google
+              {typeof reviewData.userRatingCount === "number" &&
+                <span>· {reviewData.userRatingCount.toLocaleString()} reviews</span>}
+            </a>
+          )}
 
           <div className="topline-social">
 
@@ -514,7 +525,7 @@ function SiteHeader() {
 
 // -----------------------------------------------------------------------------
 
-function Hero() {
+function Hero({ reviewData }) {
 
   return (
 
@@ -553,6 +564,19 @@ function Hero() {
           </a>
 
         </div>
+
+        {typeof reviewData?.rating === "number" && (
+          <a className="hero-rating" href={reviewData.googleMapsUri || "#reviews"}
+             target={reviewData.googleMapsUri ? "_blank" : undefined}
+             rel={reviewData.googleMapsUri ? "noopener noreferrer" : undefined}>
+            <span className="hero-rating-stars" aria-hidden="true">★★★★★</span>
+            <span><strong>{reviewData.rating.toFixed(1)} / 5</strong> on Google
+              {typeof reviewData.userRatingCount === "number" &&
+                <small>Based on {reviewData.userRatingCount.toLocaleString()} Google ratings</small>}
+            </span>
+            <ArrowUpRight size={18} />
+          </a>
+        )}
 
         <div className="hero-foot">
 
@@ -909,19 +933,8 @@ function ServiceAreaMap() {
   );
 }
 
-function GoogleReviews() {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/google-reviews", { signal: controller.signal })
-      .then(async (response) => {
-        if (!response.ok) throw new Error("Reviews are temporarily unavailable.");
-        return response.json();
-      })
-      .then(setData)
-      .catch((err) => { if (err.name !== "AbortError") setError(err.message); });
-    return () => controller.abort();
+function GoogleReviews({ data, error }) {
+  return () => controller.abort();
   }, []);
 
   return (
@@ -1155,6 +1168,21 @@ function Footer() {
 // -----------------------------------------------------------------------------
 
 export default function App() {
+  const [reviewData, setReviewData] = useState(null);
+  const [reviewError, setReviewError] = useState("");
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/google-reviews", { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("Reviews are temporarily unavailable.");
+        return response.json();
+      })
+      .then(setReviewData)
+      .catch((err) => { if (err.name !== "AbortError") setReviewError(err.message); });
+    return () => controller.abort();
+  }, []);
+
 
   return (
 
@@ -1162,11 +1190,11 @@ export default function App() {
 
       <Countdown />
 
-      <SiteHeader />
+      <SiteHeader reviewData={reviewData} />
 
       <main id="home">
 
-        <Hero />
+        <Hero reviewData={reviewData} />
 
         <Stats />
 
@@ -1180,7 +1208,7 @@ export default function App() {
         <Financing />
 
         <ServiceAreas />
-        <GoogleReviews />
+        <GoogleReviews data={reviewData} error={reviewError} />
 
         <Contact />
 
