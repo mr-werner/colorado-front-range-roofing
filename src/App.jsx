@@ -934,9 +934,6 @@ function ServiceAreaMap() {
 }
 
 function GoogleReviews({ data, error }) {
-  return () => controller.abort();
-  }, []);
-
   return (
     <section className="section reviews" id="reviews">
       <div className="container">
