@@ -65,13 +65,13 @@ const PHONE = "7195422330";
 
 const EMAIL = "info@coloradofrroofing.com";
 // Public contact details — edit here, no environment variables required.
-const STUDIO_PHONE = ""; // Add your Blueprint WebStudio phone number.
+const STUDIO_PHONE = "+17205156647"; // Add your Blueprint WebStudio phone number.
 const STUDIO_EMAIL = "hello@blueprintwebstudio.com";
 const STUDIO_WEBSITE = "https://blueprintwebstudio.com";
 
 const END_DATE =
 
-  import.meta.env.VITE_CONCEPT_END_DATE || "2026-10-19T23:59:59-06:00";
+  import.meta.env.VITE_CONCEPT_END_DATE || "2026-11-14T23:59:59-06:00";
 
 
 
