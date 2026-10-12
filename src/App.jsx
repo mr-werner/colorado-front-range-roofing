@@ -299,7 +299,7 @@ function ConceptInterestModal({ onClose }) {
     setStatus("sending");
     setError("");
     try {
-      const response = await fetch("https://blueprintwebstudio.com/api/demo-interest", {
+      const response = await fetch("/api/demo-interest", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -408,7 +408,7 @@ function Countdown() {
           </div>
         )}
         <div className="concept-widget-footer">
-          <a className="concept-widget-brand" href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer" aria-label="Visit Blueprint WebStudio"><img src={blueprintLogo} alt="" /><span>Blueprint WebStudio</span></a>
+          <a className="concept-widget-brand" href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer" aria-label="Visit Blueprint WebStudio"><span className="studio-logo-mask" style={{ WebkitMaskImage: `url(${blueprintLogo})`, maskImage: `url(${blueprintLogo})` }} aria-hidden="true" /><span>Blueprint WebStudio</span></a>
           <span>Independent concept</span>
         </div>
       </aside>
@@ -1174,7 +1174,7 @@ function Footer() {
 
         <a className="footer-studio-brand" href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer" aria-label="Website concept by Blueprint WebStudio">
           <span>Concept by</span>
-          <img src={blueprintLogo} alt="" />
+          <span className="studio-logo-mask" style={{ WebkitMaskImage: `url(${blueprintLogo})`, maskImage: `url(${blueprintLogo})` }} aria-hidden="true" />
           <strong>Blueprint WebStudio</strong>
         </a>
 

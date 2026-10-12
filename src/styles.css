@@ -257,3 +257,13 @@
   padding-top: 25px;
   padding-bottom: 55px;
 }
+
+/* Refinements: keep roofing identity prominent and recolor studio icon to text */
+.brand-logo { height: 82px; max-width: 310px; }
+@media (max-width: 800px) { .brand-logo { height: 62px; max-width: 235px; } }
+.studio-logo-mask { display: inline-block; width: 27px; height: 27px; flex: 0 0 27px; background-color: currentColor; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; -webkit-mask-size: contain; mask-size: contain; }
+.concept-widget-brand { color: #f1ebff; }
+.footer-studio-brand { color: #d8c4ff; }
+.footer-studio-brand .studio-logo-mask { width: 29px; height: 29px; flex-basis: 29px; }
+/* User's approved hero spacing; do not change. */
+.hero-content { padding-top: 25px; padding-bottom: 55px; }
