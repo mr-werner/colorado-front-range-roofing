@@ -225,3 +225,35 @@
 .interest-success svg{color:#6046a8}
 .interest-success p{line-height:1.7;color:#686175;margin-bottom:25px}
 @media(max-width:540px){.concept-widget{right:10px;bottom:10px;width:min(355px,calc(100vw - 20px))}.interest-backdrop{padding:10px}.interest-modal{max-height:95vh;padding:35px 22px}.concept-widget-body h2{font-size:23px}}
+
+/* Blueprint WebStudio identity and compact review panel */
+.concept-widget {
+  width: min(330px, calc(100vw - 24px));
+  bottom: 12px;
+  right: 12px;
+}
+.concept-widget-head { padding: 11px 14px; font-size: 9px; }
+.concept-widget-body { padding: 5px 14px 14px; }
+.concept-widget-body h2 { font-size: 21px; margin: 3px 0 14px; }
+.concept-widget-body p { margin: 7px 0 10px; }
+.concept-widget-timer { gap: 8px; margin-bottom: 14px; }
+.concept-widget-timer strong { font-size: 20px; }
+.concept-widget-cta { padding: 12px; font-size: 13px; }
+.concept-widget-links { margin-top: 12px; font-size: 11px; }
+.concept-widget-footer { padding: 9px 14px; font-size: 9px; }
+.concept-widget-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.concept-widget-brand img { width: 25px; height: 25px; object-fit: contain; flex-shrink: 0; }
+.concept-widget-brand span { font-weight: 700; color: #f1ebff; }
+.footer-studio-brand { display: inline-flex; align-items: center; gap: 8px; color: #d8c4ff; }
+.footer-studio-brand img { width: 29px; height: 29px; object-fit: contain; }
+.footer-studio-brand strong { color: #fff; font-size: 11px; }
+.footer-studio-brand:hover strong { color: #c5a5ff; }
+@media (max-width: 540px) {
+  .concept-widget { width: min(320px, calc(100vw - 20px)); bottom: 10px; right: 10px; }
+  .footer-studio-brand { flex-wrap: wrap; }
+}
+/* User-approved hero spacing: preserve in future updates. */
+.hero-content {
+  padding-top: 25px;
+  padding-bottom: 55px;
+}

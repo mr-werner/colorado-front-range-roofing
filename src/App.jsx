@@ -1,3 +1,4 @@
+import blueprintLogo from "./assets/blueprint-webstudio-logo.png";
 import React, { useEffect, useState, useMemo } from "react";
 
 import {
@@ -60,17 +61,17 @@ import {
 
 const COMPANY = "Colorado Front Range Roofing";
 
-const PHONE = "+17195422330";
+const PHONE = "7195422330";
 
 const EMAIL = "info@coloradofrroofing.com";
 // Public contact details — edit here, no environment variables required.
-const STUDIO_PHONE = "+17205156647"; // Add your Blueprint WebStudio phone number.
+const STUDIO_PHONE = ""; // Add your Blueprint WebStudio phone number.
 const STUDIO_EMAIL = "hello@blueprintwebstudio.com";
 const STUDIO_WEBSITE = "https://blueprintwebstudio.com";
 
 const END_DATE =
 
-  import.meta.env.VITE_CONCEPT_END_DATE || "2026-11-14T23:59:59-06:00";
+  import.meta.env.VITE_CONCEPT_END_DATE || "2026-10-19T23:59:59-06:00";
 
 
 
@@ -407,7 +408,7 @@ function Countdown() {
           </div>
         )}
         <div className="concept-widget-footer">
-          <a href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer">© Blueprint WebStudio</a>
+          <a className="concept-widget-brand" href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer" aria-label="Visit Blueprint WebStudio"><img src={blueprintLogo} alt="" /><span>Blueprint WebStudio</span></a>
           <span>Independent concept</span>
         </div>
       </aside>
@@ -1171,17 +1172,11 @@ function Footer() {
 
         <span>© {new Date().getFullYear()} {COMPANY} — Independent design concept, not an official company website.</span>
 
-        <span>
-
-          Concept by{" "}
-
-          <a href="https://blueprintwebstudio.com" target="_blank" rel="noreferrer">
-
-            Blueprint WebStudio
-
-          </a>
-
-        </span>
+        <a className="footer-studio-brand" href={STUDIO_WEBSITE} target="_blank" rel="noopener noreferrer" aria-label="Website concept by Blueprint WebStudio">
+          <span>Concept by</span>
+          <img src={blueprintLogo} alt="" />
+          <strong>Blueprint WebStudio</strong>
+        </a>
 
       </div>
 
